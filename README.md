@@ -46,17 +46,17 @@ export default new Vuex.Store({
 
 #### 	vuexAlong.watch(arry,boolean)
 
-​		arry: attribute or module name list
-第一个参数是要属性或模块名的数组
+#####​		arry: attribute or module name list
+##### 第一个参数是 属性名或模块名 的数组
 
-​		boolean (non-essential):  Default rue
-第二个参数不是必须的 默认true
+#####​		boolean (non-essential):  Default rue
+##### 第二个参数不是必须的 默认true
 
-​			true = save arry
-true 会把 arry 作为要保存的列表
+#####​			true = save arry
+##### true 会把 arry 作为要保存的列表
 
-​			false = filter arry
-false 会把 arry 作过滤的列表
+#####​			false = filter arry
+##### false 会把 arry 作过滤的列表
 
 
 #### If you need clean save. Use clean()
