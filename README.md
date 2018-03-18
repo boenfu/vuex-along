@@ -1,7 +1,8 @@
 # vuex-along
-Keep vuex state after browser refresh
-借助于 localstorage
-用于在浏览器刷新后 保存 vuex 状态的小插件
+
+## Keep vuex state after browser refresh
+## 借助于 localstorage
+## 用于在浏览器刷新后 保存 vuex 状态的小插件
 
 
 
