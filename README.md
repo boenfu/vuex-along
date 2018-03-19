@@ -1,7 +1,7 @@
 # vuex-along
 
 ### Keep vuex state after browser refresh
-### 借助于 localstorage
+### 借助于 localstorage 和 vuex 的 API 完成
 ### 用于在浏览器刷新后 保存 vuex 状态的小插件
 
 
@@ -34,7 +34,7 @@ export default new Vuex.Store({
 });
 ```
 
- Over ~ 
+##### 到这就可以使用了 以下是可选设置
 
 
 ## Setting
