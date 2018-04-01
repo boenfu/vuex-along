@@ -1,8 +1,9 @@
 # vuex-along
 
 ### Keep vuex state after browser refresh
-### 借助于 localstorage 和 vuex 的 API 完成
 ### 用于在浏览器刷新后 保存 vuex 状态的小插件
+
+* 新增保存至 sessionStorage
 
 
 
@@ -34,71 +35,107 @@ export default new Vuex.Store({
 });
 ```
 
-##### 到这就可以使用了 以下是可选设置
 
 
-## Setting
+Now the plug-in has come into effect  / 现在插件已经生效了
 
-#### Default save  all state 
-#### 默认保存所有内容
+Save all state by default / 默认保存所有state
 
-#### If you don`t want to save all state. Use watch()
-#### 只保存部分内容可以使用 watch 方法
+You can set up by use API / 你可以通过相应API来设置
 
-#### 	vuexAlong.watch(arry,boolean)
-#####
-#####		arry: attribute or module name list
-##### 第一个参数是 属性名或模块名 的数组
-#####
-#####		boolean (non-essential):  Default true
-##### 第二个参数不是必须的 默认true
-#####
-#####		true = save arry
-##### true 会把 arry 作为要保存的列表
-#####
-#####		false = filter arry
-##### false 会把 arry 作过滤的列表
-#####
-#####
-#### If you need clean save. Use clean()
-#### 想要清除 localstorage 调用 clean 方法
 
-#### 	vuexAlong.clean()
+
+
+
+## API
+
+
+
+#### 	1. vuexAlong.watch (arry , [boolean])
+
+ arry :  attribute or module name list / 属性名或模块名 的数组
+
+ boolean (non-essential):  Default true / 非必须 默认true
+
+​	true:   will save arry  /  arry 作为要保存的列表
+
+​	false:   will filter arry /  arry 作过滤的列表
+
+
+
+#### 2. vuexAlong.watchSession (arry, [boolean])
+
+The usage is the same as above / 用法和上面一样
+
+But it kept data in the sessionStorage / 只不过是存储在sessionStorage 
+
+Closing the browser window will disappear / 关闭浏览器窗口就会消失
+
+
+
+Be careful: 
+
+​	watch() and watchSession() can take effect at the same time
+
+​	If you want to only save sessionStorage 
+
+​	Please use vuexAlong.onlySession(true)；
+
+注意：
+
+​	watch() 和 watchSession() 会同时生效
+
+​	如果你只想保存至 sessionStorage 
+
+​	调用 vuexAlong.onlySession(true)；
+
+
+
+#### 3. vuexAlong.onlySession (boolean)
+
+Whether the setting is read-only sessionStorage  / 设置是否只读 sessionStorage  
+
+
+
+#### 4. vuexAlong.clean()    /   window.cleanVuexAlong()
+
+Clear the saved data / 清除保存的数据
+
+
 
 
 
 ### Demo
 
 ```
-import Vuex from 'vuex'
-import Vue from 'vue'
-import vuexAlong from 'vuex-along'
+import Vue from 'vue';
+import vuex from 'vuex';
+import vuexAlong from  'vuex-along';
 
-Vue.use(Vuex);
+Vue.use(vuex);
 
-//filter title & num
-//此处为保存时过滤 title 和 num
-vuexAlong.watch(['title','num'],false);
+vuexAlong.watch(['localNum'],true);
+vuexAlong.watchSession(['sessionNum'],true);
+//vuexAlong.onlySession(true);
+
 const state = {
-  num: 0,
-  title: 'hello',
-  name: 'boen',
-  people: {
-    men: 10,
-    women: 10
-  }
+  localNum: 0,
+  sessionNum:0,
 };
 const mutations = {
-  addNum(state){
-    state.num ++;
-  }
+  addNumLocal(state){
+    state.localNum ++;
+  },
+  addNumSession(state){
+    state.sessionNum ++;
+  },
 };
-export default new Vuex.Store({
+export default new vuex.Store({
   state:state,
   mutations:mutations,
-  //add vuexAlong
   plugins: [vuexAlong]
 });
+
 
 ```
 
