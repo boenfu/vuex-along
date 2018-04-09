@@ -4,6 +4,7 @@
 ### 用于在浏览器刷新后 保存 vuex 状态的小插件
 
 * 新增保存至 sessionStorage
+* 源文件已被编译为 ES5 增加兼容性
 
 
 
@@ -69,6 +70,8 @@ The usage is the same as above / 用法和上面一样
 
 But it kept data in the sessionStorage / 只不过是存储在sessionStorage 
 
+And  state will not be saved by default /  并且不会默认保存所有state
+
 Closing the browser window will disappear / 关闭浏览器窗口就会消失
 
 
@@ -83,7 +86,7 @@ Be careful:
 
 注意：
 
-​	watch() 和 watchSession() 会同时生效
+​	watch() 和 watchSession() 可以同时生效
 
 ​	如果你只想保存至 sessionStorage 
 
@@ -100,8 +103,6 @@ Whether the setting is read-only sessionStorage  / 设置是否只读 sessionSto
 #### 4. vuexAlong.clean()    /   window.cleanVuexAlong()
 
 Clear the saved data / 清除保存的数据
-
-
 
 
 

@@ -1,6 +1,6 @@
 {
   "name": "vuex-along",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "simple js code for keep vuex state",
   "main": "lib/vuex-along.js",
   "private": false,
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/boenfu/vuex-along#readme",
   "dependencies": {
-    "vuex-along": "^1.1.0"
+    "vuex-along": "^1.1.1"
   }
 }
