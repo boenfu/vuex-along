@@ -140,3 +140,5 @@ export default new vuex.Store({
 
 ```
 
+demo:  http://demo.boenfu.cn/vuex-along
+
