@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/boenfu/vuex-along/issues"
   },
-  "homepage": "https://github.com/boenfu/vuex-along#readme",
-  "dependencies": {
-    "vuex-along": "^1.1.1"
-  }
+  "homepage": "https://github.com/boenfu/vuex-along#readme"
 }

@@ -3,10 +3,10 @@
 ### Keep vuex state after browser refresh
 ### 用于在浏览器刷新后 保存 vuex 状态的小插件
 
- 
 demo 及 示例代码:  http://demo.boenfu.cn/vuex-along
- 
 
+
+* 修复目录循环
 * 新增保存至 sessionStorage
 * 源文件已被编译为 ES5 增加兼容性
 
