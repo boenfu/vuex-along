@@ -6,9 +6,7 @@
 demo 及 示例代码:  http://demo.boenfu.cn/vuex-along
 
 
-* 修复目录循环
-* 新增保存至 sessionStorage
-* 源文件已被编译为 ES5 增加兼容性
+* 新增自定义key ---- 2018年8月8日
 
 
 
@@ -115,6 +113,16 @@ export default new Vuex.Store({
 #### 4. vuexAlong.clean()    /   window.cleanVuexAlong()
 
     Clear the saved data / 清除保存的数据
+
+
+#### 5. vuexAlong.setKey(str) 
+
+```
+Set the key data for use by multiple projects under the same site / 设置存储数据的key,用于同站点下多项目使用
+
+Default was 'vuex-along' / 默认为 'vuex-along'
+```
+
 
 
 

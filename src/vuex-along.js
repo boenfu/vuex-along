@@ -1,6 +1,7 @@
 let unll,ll,sl,unsl;
 let onlySession = false;
-const LOCALSTORAGE = 0,SESSIONSTORAGE = 1,KEY = 'vuex-along';
+const LOCALSTORAGE = 0,SESSIONSTORAGE = 1;
+let KEY = 'vuex-along';
 const ls = window.localStorage;
 const ss = window.sessionStorage;
 
@@ -105,6 +106,22 @@ const removeItem = () => {
     ss.removeItem(KEY);
     ls.removeItem(KEY);
 }
+
+/**
+ * 2018年8月8日
+ * @param key
+ */
+const setKey = key => {
+  if (typeof key == 'string') {
+    KEY = key;
+  } else {
+    console.error(
+      '[vuex-along] key is not string'
+    );
+  }
+}
+
+vuexAlong.setKey = setKey;
 vuexAlong.watch = watch;
 vuexAlong.watchSession = watchSession;
 vuexAlong.onlySession = setOnlySession;
