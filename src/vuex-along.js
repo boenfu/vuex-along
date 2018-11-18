@@ -102,9 +102,9 @@ const setItem = (key, val, type) => {
     storage.setItem(key, coded(JSON.stringify(val)));
 }
 
-const removeItem = () => {
-    ss.removeItem(KEY);
-    ls.removeItem(KEY);
+const removeItem = (key = KEY) => {
+    ss.removeItem(key);
+    ls.removeItem(key);
 }
 
 /**

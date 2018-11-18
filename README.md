@@ -6,10 +6,6 @@
 demo 及 示例代码:  http://demo.boenfu.cn/vuex-along
 
 
-* 新增自定义key ---- 2018年8月8日
-
-
-
 ## Install
 
 ```
@@ -110,9 +106,11 @@ export default new Vuex.Store({
 
 
 
-#### 4. vuexAlong.clean()    /   window.cleanVuexAlong()
+#### 4. vuexAlong.clean(['key'])    /   window.cleanVuexAlong(['key'])
 
     Clear the saved data / 清除保存的数据
+
+    Default clean 'vuex-along' / 默认清除 'vuex-along'
 
 
 #### 5. vuexAlong.setKey(str) 
