@@ -1,6 +1,6 @@
 # vuex-along
 
-### Keep vuex state after browser refresh
+### Keep vuex state after browser refresh ![](https://img.shields.io/npm/dw/vuex-along.svg)
 ### 用于在浏览器刷新后 保存 vuex 状态的小插件
 
 demo 及 示例代码:  http://demo.boenfu.cn/vuex-along
