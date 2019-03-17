@@ -1,126 +1,158 @@
 # vuex-along
 
-### Keep vuex state after browser refresh ![](https://img.shields.io/npm/dw/vuex-along.svg)
-### 用于在浏览器刷新后 保存 vuex 状态的小插件
+### A plugins to auto save and restore state for vuex
 
-demo 及 示例代码:  http://demo.boenfu.cn/vuex-along
+### [![Build Status](https://travis-ci.org/boenfu/vuex-along.svg?branch=master)](https://travis-ci.org/boenfu/vuex-along)![](https://img.shields.io/npm/v/vuex-along.svg)![](https://img.shields.io/npm/l/vuex-along.svg) ![npm](https://img.shields.io/npm/dm/vuex-along.svg)![GitHub last commit](https://img.shields.io/github/last-commit/boenfu/vuex-along.svg)
 
+### 能够保存 state 到本地并在页面刷新后恢复的 vuex 插件  ![GitHub stars](https://img.shields.io/github/stars/boenfu/vuex-along.svg?style=social)
+
+demo :  https://boenfu.github.io/vuex-along/
 
 ## Install
 
-```
+```shell
 npm install vuex-along --save
+
+yarn add vuex-along
 ```
-
-
 
 ## Use
 
-###   1.import 导入
+### 添加至 store 的 plugins 的数组里
 
-```
-import vuexAlong from 'vuex-along'
-...
-```
+```javascript
+import { createVuexAlong } from 'vuex-along'
 
-###   2.add to store 
-### 添加至store的 plugins 的数组里
-
-```
 export default new Vuex.Store({
   state:{...},
-  ...
-  plugins: [vuexAlong]
+  modules:{...},
+  plugins: [createVuexAlong()]
 });
 ```
 
+    Now the plugins has come into effect  / 现在插件已经生效了
 
 
-    Now the plug-in has come into effect  / 现在插件已经生效了
+    Save all state by default to localStorage / 默认保存所有 state 到 localStorage
 
 
-    Save all state by default / 默认保存所有state
+    You can change options to set it / 你可以通过改变 options 来改变保存内容
 
+## Example
 
-    You can set up by use API / 你可以通过相应API来设置
+```javascript
+import { createVuexAlong } from "vuex-along";
 
+const moduleA = {
+  state: {
+    a1: "hello",
+    a2: "world"
+  }
+};
 
-
-
-
-## API
-
-
-
-#### 	1. vuexAlong.watch (arry , [boolean])
-
-     arry :  attribute or module name list / 属性名或模块名 的数组
-
-
-     boolean (non-essential):  Default true / 非必须 默认true
-
-
-    ​	true:   will save arry  /  arry 作为要保存的列表
-
-    ​	false:   will filter arry /  arry 作过滤的列表
-
-
-
-#### 2. vuexAlong.watchSession (arry, [boolean])
-
-    The usage is the same as above / 用法和上面一样
-
-
-    But it kept data in the sessionStorage / 只不过是存储在sessionStorage 
-
-
-    And  state will not be saved by default /  并且不会默认保存所有state
-
-
-    Closing the browser window will disappear / 关闭浏览器窗口就会消失
-
-
-
-    Be careful: 
-
-    ​	watch() and watchSession() can take effect at the same time
-
-    ​	If you want to only save sessionStorage 
-
-    ​	Please use vuexAlong.onlySession(true)；
-
-
-    注意：
-
-    ​	watch() 和 watchSession() 可以同时生效
-
-    ​	如果你只想保存至 sessionStorage 
-
-    ​	调用 vuexAlong.onlySession(true)；
-
-
-
-#### 3. vuexAlong.onlySession (boolean)
-
-    Whether the setting is read-only sessionStorage  / 设置是否只读 sessionStorage  
-
-
-
-#### 4. vuexAlong.clean(['key'])    /   window.cleanVuexAlong(['key'])
-
-    Clear the saved data / 清除保存的数据
-
-    Default clean 'vuex-along' / 默认清除 'vuex-along'
-
-
-#### 5. vuexAlong.setKey(str) 
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  modules: {
+    ma: moduleA
+  },
+  plugins: [
+    createVuexAlong({
+      name: "hello-vuex-along", // 设置保存的集合名字，避免同站点下的多项目数据冲突
+      local: {
+        list: ["ma"],
+        isFilter: true // 过滤模块 ma 数据， 将其他的存入 localStorage
+      },
+      session: {
+        list: ["count", "ma.a1"] // 保存 count 和模块 ma 中的 a1 到 sessionStorage
+      }
+    })
+  ]
+});
 
 ```
-Set the key data for use by multiple projects under the same site / 设置存储数据的key,用于同站点下多项目使用
 
-Default was 'vuex-along' / 默认为 'vuex-along'
+## Options
+
+```typescript
+interface VuexAlongOptions {
+  /**
+   * 可选，设置本地数据集合的名字，默认为 vuex-along。
+   * Optional, set the name of the local data collection, the default is vuex-along.
+   */
+  name?: string;
+  /**
+   * 可选，localStorage 的配置，默认开启保存全部 state。
+   * Optional, localStorage configuration, by default, save all state.
+   */
+  local?: WatchOptions;
+  /**
+   * 可选，sessionStorage 的配置， 默认未开启。
+   * Optional, sessionStorage configuration, not enabled by default.
+   */
+  session?: WatchOptions;
+  /**
+   * 可选，是否仅使用 sessionStorage，默认 false。
+   * Optional, whether to use only sessionStorage, the default is false.
+   */
+  justSession?: boolean;
+}
+
+interface WatchOptions {
+  /**
+   * 需要监听的属性名或模块名的字符串列表。
+   * A list of property names or module names to listen to.
+   */
+  list: string[];
+  /**
+   * 可选，false 为保存 list, true 为过滤 list，默认 false。
+   * Optional, false is to save list, true is to filter list, default is false.
+   */
+  isFilter?: boolean;
+}
+```
+
+## Clear data
+
+```typescript
+window.clearVuexAlong(local = true, session = true):void;
 ```
 
 
 
+你可以使用挂载到 window 下的 clearVuexAlong 方法来清除数据，直接调用 `clearVuexAlong()`。
 
+You can use `window.clearVuexAlong()` to clear the data.
+
+
+
+only`localStorage` ，use `clearVuexAlong(true,false)`
+
+only `sessionStorage` ，use `clearVuexAlong(fasle,true)`
+
+
+
+## Run demo
+
+```shell
+git clone https://github.com/boenfu/vuex-along.git
+
+cd ./vuex-along
+
+yarn run:demo
+```
+
+
+
+## Tips
+
+1. `sessionStorage` 所存的数据在恢复时比 `localStorage` 优先级高。
+
+   The data stored in `sessionStorage` has higher priority than `localStorage` when recovering.
+
+
+
+## License
+
+MIT License.
