@@ -2,9 +2,9 @@
 
 ### A plugins to auto save and restore state for vuex
 
-### [![Build Status](https://travis-ci.org/boenfu/vuex-along.svg?branch=master)](https://travis-ci.org/boenfu/vuex-along)![](https://img.shields.io/npm/v/vuex-along.svg)![](https://img.shields.io/npm/l/vuex-along.svg) ![npm](https://img.shields.io/npm/dm/vuex-along.svg)![GitHub last commit](https://img.shields.io/github/last-commit/boenfu/vuex-along.svg)
+![Build Status](https://travis-ci.org/boenfu/vuex-along.svg?branch=master) ![](https://img.shields.io/npm/v/vuex-along.svg) ![](https://img.shields.io/npm/l/vuex-along.svg) ![npm](https://img.shields.io/npm/dm/vuex-along.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/boenfu/vuex-along.svg)
 
-### 能够保存 state 到本地并在页面刷新后恢复的 vuex 插件  ![GitHub stars](https://img.shields.io/github/stars/boenfu/vuex-along.svg?style=social)
+### 保存 state 到本地并在页面刷新后恢复的 vuex 插件 ![GitHub stars](https://img.shields.io/github/stars/boenfu/vuex-along.svg?style=social)
 
 demo :  https://boenfu.github.io/vuex-along/
 
@@ -70,7 +70,6 @@ const store = new Vuex.Store({
     })
   ]
 });
-
 ```
 
 ## Options
@@ -119,19 +118,13 @@ interface WatchOptions {
 window.clearVuexAlong(local = true, session = true):void;
 ```
 
-
-
 你可以使用挂载到 window 下的 clearVuexAlong 方法来清除数据，直接调用 `clearVuexAlong()`。
 
 You can use `window.clearVuexAlong()` to clear the data.
 
-
-
 only`localStorage` ，use `clearVuexAlong(true,false)`
 
 only `sessionStorage` ，use `clearVuexAlong(fasle,true)`
-
-
 
 ## Run demo
 
@@ -143,15 +136,11 @@ cd ./vuex-along
 yarn run:demo
 ```
 
-
-
 ## Tips
 
 1. `sessionStorage` 所存的数据在恢复时比 `localStorage` 优先级高。
 
    The data stored in `sessionStorage` has higher priority than `localStorage` when recovering.
-
-
 
 ## License
 
