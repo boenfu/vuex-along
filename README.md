@@ -4,7 +4,7 @@
 
 ![Build Status](https://travis-ci.org/boenfu/vuex-along.svg?branch=master) ![](https://img.shields.io/npm/v/vuex-along.svg) ![](https://img.shields.io/npm/l/vuex-along.svg) ![npm](https://img.shields.io/npm/dm/vuex-along.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/boenfu/vuex-along.svg)
 
-### 保存 state 到本地并在页面刷新后恢复的 vuex 插件 ![GitHub stars](https://img.shields.io/github/stars/boenfu/vuex-along.svg?style=social)
+### 自动保存 state 到本地并在页面刷新后自动恢复的 vuex 插件 ![GitHub stars](https://img.shields.io/github/stars/boenfu/vuex-along.svg?style=social)
 
 demo :  https://boenfu.github.io/vuex-along/
 
@@ -21,7 +21,7 @@ yarn add vuex-along
 ### 添加至 store 的 plugins 的数组里
 
 ```javascript
-import { createVuexAlong } from 'vuex-along'
+import createVuexAlong from 'vuex-along'
 
 export default new Vuex.Store({
   state:{...},
@@ -41,7 +41,7 @@ export default new Vuex.Store({
 ## Example
 
 ```javascript
-import { createVuexAlong } from "vuex-along";
+import createVuexAlong from "vuex-along";
 
 const moduleA = {
   state: {

@@ -1,6 +1,6 @@
 {
   "name": "vuex-along",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Auto save vuex state to local",
   "main": "lib/main.js",
   "private": false,
@@ -9,13 +9,19 @@
     "lib"
   ],
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/lodash": "^4.14.123",
     "@types/lowdb": "^1.0.7",
+    "babel-loader": "^8.0.5",
     "rimraf": "^2.6.3"
   },
   "scripts": {
     "prepublish": "yarn build:plugins && yarn build:demo",
-    "build:plugins": "rimraf lib && tsc --build",
+    "build:plugins": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\"",
     "build:demo": "cd ./demo && yarn && yarn build",
     "dev:demo": "cd ./demo && yarn serve",
     "run:demo": "cd ./demo && yarn && yarn serve"
