@@ -27,5 +27,5 @@ interface VuexAlongOptions {
      */
     justSession?: boolean;
 }
-export declare const createVuexAlong: (options: VuexAlongOptions) => (store: Store) => void;
-export {};
+declare const _default: (options: VuexAlongOptions) => (store: Store) => void;
+export default _default;

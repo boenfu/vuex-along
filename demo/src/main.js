@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { createVuexAlong } from "../../lib/main";
+import createVuexAlong from "../../lib/main";
 
 import App from "./App.vue";
 
