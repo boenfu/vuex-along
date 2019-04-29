@@ -15,17 +15,22 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
     "@types/js-md5": "^0.4.2",
+    "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
     "@types/lowdb": "^1.0.7",
     "babel-loader": "^8.0.5",
-    "rimraf": "^2.6.3"
+    "jest": "^24.7.1",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
   },
   "scripts": {
-    "prepublish": "yarn build:plugins && yarn build:demo",
+    "build": "yarn build:plugins && yarn build:demo",
     "build:plugins": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\"",
     "build:demo": "cd ./demo && yarn && yarn build",
     "dev:demo": "cd ./demo && yarn serve",
-    "run:demo": "cd ./demo && yarn && yarn serve"
+    "run:demo": "cd ./demo && yarn && yarn serve",
+    "test": "jest --silent"
   },
   "dependencies": {
     "js-md5": "^0.7.3",
