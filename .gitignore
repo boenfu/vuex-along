@@ -10,7 +10,6 @@ node_modules/
 # Building artifacts
 
 lib/
-dist/
 bld/
 .cache/
 *.tgz
