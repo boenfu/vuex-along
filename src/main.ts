@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Store } from "vuex";
+import md5 from "js-md5";
 
 import { DBService } from "./db";
 
@@ -48,7 +49,7 @@ class VuexAlong {
     name = "vuex-along",
     justSession = false
   }: VuexAlongOptions) {
-    this.name = name;
+    this.name = md5.base64(name).replace("==", "");
     this.local = local;
     this.session = session;
     this.justSession = justSession;
@@ -58,8 +59,8 @@ class VuexAlong {
 
     window
       ? (window.clearVuexAlong = (local, session): void => {
-          this.clear(local, session);
-        })
+        this.clear(local, session);
+      })
       : undefined;
   }
 

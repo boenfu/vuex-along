@@ -5,9 +5,11 @@ node_modules/
 # Configuration
 
 .config/
+.vscode/
 
 # Building artifacts
 
+lib/
 bld/
 .cache/
 *.tgz
