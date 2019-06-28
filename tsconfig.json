@@ -7,6 +7,8 @@
     "listFiles": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "exclude": ["test", "lib"]
 }

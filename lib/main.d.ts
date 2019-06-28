@@ -1,4 +1,8 @@
-import { Store } from "vuex";
+interface Store {
+    state: object;
+    replaceState(state: object): void;
+    subscribe(callback: (mutation: unknown, state: object) => void): void;
+}
 interface WatchOptions {
     /**
      * 需要监听的属性名或模块名的字符串列表

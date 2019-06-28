@@ -3,11 +3,7 @@ export default class SessionStorage {
     defaultValue: any;
     serialize: any;
     deserialize: any;
-    constructor(source: any, { defaultValue, serialize, deserialize }?: {
-        defaultValue?: {} | undefined;
-        serialize?: ((obj: object) => string) | undefined;
-        deserialize?: ((text: string, reviver?: ((this: any, key: string, value: any) => any) | undefined) => any) | undefined;
-    });
+    constructor(source: any, options?: any);
     read(): any;
     write(data: object): void;
 }
