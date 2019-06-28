@@ -1,8 +1,16 @@
 import _ from "lodash";
-import { Store } from "vuex";
-import md5 from "js-md5";
 
 import { DBService } from "./db";
+
+const DEFAULT_NAME = "vuex-along";
+
+const ROOT_DATA_KEY = "root";
+
+interface Store {
+  state: object;
+  replaceState(state: object): void;
+  subscribe(callback: (mutation: unknown, state: object) => void): void;
+}
 
 interface WatchOptions {
   /**
@@ -35,7 +43,6 @@ interface VuexAlongOptions {
 }
 
 class VuexAlong {
-  readonly name: string;
   readonly localDBService: DBService;
   readonly sessionDBService: DBService;
 
@@ -46,10 +53,9 @@ class VuexAlong {
   constructor({
     local,
     session,
-    name = "vuex-along",
+    name = DEFAULT_NAME,
     justSession = false
   }: VuexAlongOptions) {
-    this.name = md5.base64(name).replace("==", "");
     this.local = local;
     this.session = session;
     this.justSession = justSession;
@@ -59,8 +65,8 @@ class VuexAlong {
 
     window
       ? (window.clearVuexAlong = (local, session): void => {
-        this.clear(local, session);
-      })
+          this.clear(local, session);
+        })
       : undefined;
   }
 
@@ -79,7 +85,7 @@ class VuexAlong {
         }
       }
 
-      this.localDBService.set(this.name, localState);
+      this.localDBService.set(ROOT_DATA_KEY, localState);
     }
 
     let session = this.session;
@@ -94,31 +100,27 @@ class VuexAlong {
           : _.pick(sessionState, list);
       }
 
-      this.sessionDBService.set(this.name, sessionState);
+      this.sessionDBService.set(ROOT_DATA_KEY, sessionState);
     }
   }
 
   restoreData(store: Store): void {
-    let name = this.name;
-
     store.replaceState(
       _.defaultsDeep(
-        this.sessionDBService.get(name),
-        this.localDBService.get(name),
+        this.sessionDBService.get(ROOT_DATA_KEY),
+        this.localDBService.get(ROOT_DATA_KEY),
         store.state
       )
     );
   }
 
   clear(local = true, session = false): void {
-    let name = this.name;
-
     if (local) {
-      this.localDBService.unset(name);
+      this.localDBService.unset(ROOT_DATA_KEY);
     }
 
     if (session) {
-      this.sessionDBService.unset(name);
+      this.sessionDBService.unset(ROOT_DATA_KEY);
     }
   }
 }

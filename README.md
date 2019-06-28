@@ -142,6 +142,8 @@ yarn run:demo
 
    The data stored in `sessionStorage` has higher priority than `localStorage` when recovering.
 
+2. 存储内容的顶层对象的 `key` 固定为 `root` （1.2.6）
+
 ## License
 
 MIT License.

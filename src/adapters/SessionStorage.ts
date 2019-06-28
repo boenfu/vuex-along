@@ -9,14 +9,13 @@ export default class SessionStorage {
   serialize: any;
   deserialize: any;
 
-  constructor(
-    source: any,
-    { defaultValue = {}, serialize = stringify, deserialize = JSON.parse } = {}
-  ) {
+  constructor(source: any, options?: any) {
+    options = options ? options : {};
+
     this.source = source;
-    this.defaultValue = defaultValue;
-    this.serialize = serialize;
-    this.deserialize = deserialize;
+    this.defaultValue = options.defaultValue || {};
+    this.serialize = options.serialize || stringify;
+    this.deserialize = options.deserialize || JSON.parse;
   }
 
   read() {
