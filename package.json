@@ -1,6 +1,6 @@
 {
   "name": "vuex-along",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Auto save vuex state to local",
   "main": "lib/main.js",
   "private": false,
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "js-md5": "^0.7.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "lowdb": "^1.0.0",
     "vue": "^2.6.10"
   },
