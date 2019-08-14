@@ -31,5 +31,5 @@ interface VuexAlongOptions {
      */
     justSession?: boolean;
 }
-declare const _default: (options: VuexAlongOptions) => (store: Store) => void;
+declare const _default: (options?: VuexAlongOptions) => (store: Store) => void;
 export default _default;
