@@ -125,7 +125,7 @@ class VuexAlong {
   }
 }
 
-export default (options: VuexAlongOptions): ((store: Store) => void) => {
+export default (options: VuexAlongOptions = {}): ((store: Store) => void) => {
   let vuexAlong = new VuexAlong(options);
 
   return (store: Store): void => {
