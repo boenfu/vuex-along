@@ -16,9 +16,13 @@
     "lib"
   ],
   "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "@types/jest": "^24.0.11",
     "@types/lodash-es": "^4.17.3",
     "@types/lowdb": "^1.0.9",
+    "babel-jest": "^24.9.0",
     "jest": "^24.7.1",
     "rimraf": "^2.6.3",
     "ts-jest": "^24.2.0",
@@ -30,7 +34,7 @@
     "build:plugins": "tsc",
     "build:demo": "cd ./demo && yarn && yarn build",
     "run:demo": "cd ./demo && yarn && yarn serve",
-    "test": "jest --silent"
+    "test": "jest --clearCache && jest --silent --passWithNoTests"
   },
   "dependencies": {
     "lodash-es": "^4.17.15",

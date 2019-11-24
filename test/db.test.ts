@@ -1,8 +1,10 @@
 import { DBService } from "../src/db";
 import SessionStorage from "../src/adapters/SessionStorage";
 
-test("test local db", () => {
+test("test local db", async () => {
   const local = new DBService("local");
+
+  await local.ready;
 
   local.set("a", 1);
 
@@ -13,8 +15,10 @@ test("test local db", () => {
   expect(local.get("a")).toBe(undefined);
 });
 
-test("test session db", () => {
+test("test session db", async () => {
   const session = new DBService("session", SessionStorage);
+
+  await session.ready;
 
   session.set("b", 2);
 
