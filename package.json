@@ -1,51 +1,45 @@
 {
   "name": "vuex-along",
-  "version": "1.2.8",
-  "description": "Auto save vuex state to local",
+  "version": "1.2.9",
+  "description": "Automatically restore vuex state after refreshing the page",
+  "author": "boenfu",
   "main": "lib/main.js",
+  "module": "lib/main.js",
+  "types": "lib/main.d.ts",
   "private": false,
   "license": "MIT",
+  "keywords": [
+    "vue",
+    "vuex"
+  ],
   "files": [
     "lib"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-typescript": "^7.3.3",
-    "@types/js-md5": "^0.4.2",
     "@types/jest": "^24.0.11",
-    "@types/lodash": "^4.14.123",
+    "@types/lodash-es": "^4.17.3",
     "@types/lowdb": "^1.0.9",
-    "babel-loader": "^8.0.6",
     "jest": "^24.7.1",
     "rimraf": "^2.6.3",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.2"
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "build": "yarn build:plugins && yarn build:demo",
-    "build:plugins": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "gh-pages": "yarn build && ./scripts/publish-pages.sh",
+    "build:plugins": "tsc",
     "build:demo": "cd ./demo && yarn && yarn build",
-    "dev:demo": "cd ./demo && yarn serve",
     "run:demo": "cd ./demo && yarn && yarn serve",
     "test": "jest --silent"
   },
   "dependencies": {
-    "js-md5": "^0.7.3",
-    "lodash": "^4.17.14",
-    "lowdb": "^1.0.0",
-    "vue": "^2.6.10"
+    "lodash-es": "^4.17.15",
+    "lowdb": "^1.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boenfu/vuex-along.git"
   },
-  "keywords": [
-    "vuex"
-  ],
-  "author": "boenfu",
   "bugs": {
     "url": "https://github.com/boenfu/vuex-along/issues"
   },

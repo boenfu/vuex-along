@@ -1,27 +1,41 @@
-import low, { AdapterSync } from "lowdb";
+import low, { AdapterSync, LowdbSync, AdapterAsync, LowdbAsync } from "lowdb";
 import LocalStorage from "lowdb/adapters/LocalStorage";
-import SessionStorage from "./adapters/SessionStorage";
 
-export class DBService {
-  private db: low.LowdbSync<unknown>;
+type Lowdb<SchemaT> = LowdbSync<SchemaT> | LowdbAsync<SchemaT>;
 
-  constructor(name: string, session = false) {
-    this.db = low(
-      session
-        ? ((new SessionStorage(name) as unknown) as AdapterSync<any>)
-        : new LocalStorage(name)
-    );
+export type LowdbAdapter<SchemaT> =
+  | AdapterAsync<SchemaT>
+  | AdapterSync<SchemaT>;
+
+export class DBService<SchemaT = any> {
+  db!: Lowdb<SchemaT>;
+  ready: Promise<void>;
+
+  constructor(
+    private _name: string,
+    private _adapter: LowdbAdapter<SchemaT> = LocalStorage
+  ) {
+    this.ready = this.initialize();
+  }
+
+  private async initialize(): Promise<void> {
+    let name = this._name;
+    let Adapter = this._adapter;
+
+    let adapter = (await new Adapter(name)) as LowdbAdapter<SchemaT>;
+
+    this.db = await low(adapter);
   }
 
   get<T>(key: string): T | undefined {
     return this.db.get(key).value();
   }
 
-  set<T>(key: string, value: T): void {
-    this.db.set(key, value).write();
+  async set<T>(key: string, value: T): Promise<void> {
+    await this.db.set(key, value).write();
   }
 
-  unset(key: string): void {
-    this.db.unset(key).write();
+  async unset(key: string): Promise<void> {
+    await this.db.unset(key).write();
   }
 }

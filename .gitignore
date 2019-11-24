@@ -8,7 +8,6 @@ node_modules/
 .vscode/
 
 # Building artifacts
-
 lib/
 bld/
 .cache/
@@ -25,3 +24,5 @@ bld/
 # GitHub Pages
 
 /gh-pages
+
+*/dist/

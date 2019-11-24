@@ -1,4 +1,5 @@
 import { DBService } from "../src/db";
+import SessionStorage from "../src/adapters/SessionStorage";
 
 test("test local db", () => {
   const local = new DBService("local");
@@ -13,7 +14,7 @@ test("test local db", () => {
 });
 
 test("test session db", () => {
-  const session = new DBService("session", true);
+  const session = new DBService("session", SessionStorage);
 
   session.set("b", 2);
 

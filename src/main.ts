@@ -1,10 +1,10 @@
-import _ from "lodash";
+import { defaultsDeep, omit, pick, cloneDeep } from "lodash-es";
 
-import { DBService } from "./db";
+import { DBService, LowdbAdapter } from "./db";
+import SessionStorage from "./adapters/SessionStorage";
 
 const DEFAULT_NAME = "vuex-along";
-
-const ROOT_DATA_KEY = "root";
+const ROOT_KEY = "root";
 
 interface Store {
   state: object;
@@ -12,125 +12,146 @@ interface Store {
   subscribe(callback: (mutation: unknown, state: object) => void): void;
 }
 
-interface WatchOptions {
-  /**
-   * 需要监听的属性名或模块名的字符串列表
-   */
+export interface VuexAlongWatchOptions {
   list: string[];
-  /**
-   * 可选，false 为保存 list, true 为过滤 list，默认 false。
-   */
   isFilter?: boolean;
 }
 
-interface VuexAlongOptions {
-  /**
-   * 可选，设置本地数据集合的名字，默认为 vuex-along
-   */
+export type VuexAlongAdapterOptions<TSchema> = {
+  local?: LowdbAdapter<TSchema>;
+  session?: LowdbAdapter<TSchema>;
+};
+
+export interface VuexAlongOptions<TSchema> {
   name?: string;
-  /**
-   * 可选，localStorage 的配置，默认开启保存全部 state。
-   */
-  local?: WatchOptions;
-  /**
-   * 可选，sessionStorage 的配置， 默认未开启。
-   */
-  session?: WatchOptions;
-  /**
-   * 可选，是否仅使用 sessionStorage，默认 false。
-   */
+  local?: VuexAlongWatchOptions;
+  session?: VuexAlongWatchOptions;
   justSession?: boolean;
+  adapterOptions?: VuexAlongAdapterOptions<TSchema>;
 }
 
-class VuexAlong {
-  readonly localDBService: DBService;
-  readonly sessionDBService: DBService;
+class VuexAlong<TSchema = any> {
+  readonly localDBService: DBService | undefined;
+  readonly sessionDBService: DBService | undefined;
 
-  private local: WatchOptions | undefined;
-  private session: WatchOptions | undefined;
+  private local: VuexAlongWatchOptions | undefined;
+  private session: VuexAlongWatchOptions | undefined;
   private justSession: boolean;
+
+  get ready(): Promise<[void, void]> {
+    return Promise.all([
+      this.localDBService?.ready,
+      this.sessionDBService?.ready,
+    ]);
+  }
 
   constructor({
     local,
     session,
     name = DEFAULT_NAME,
-    justSession = false
-  }: VuexAlongOptions) {
+    justSession = false,
+    adapterOptions: { local: localAdapter, session: sessionAdapter } = {
+      session: SessionStorage,
+    },
+  }: VuexAlongOptions<TSchema>) {
     this.local = local;
     this.session = session;
     this.justSession = justSession;
 
-    this.localDBService = new DBService(name);
-    this.sessionDBService = new DBService(name, true);
+    if (!justSession) {
+      this.localDBService = new DBService(name, localAdapter);
+    }
 
-    window
-      ? (window.clearVuexAlong = (local, session): void => {
-          this.clear(local, session);
-        })
-      : undefined;
+    if (session) {
+      this.sessionDBService = new DBService(name, sessionAdapter);
+    }
+
+    if (window) {
+      window.clearVuexAlong = (local, session) => {
+        this.clear(local, session);
+      };
+    }
+  }
+
+  private saveLocalData(state: object): void {
+    if (this.justSession) {
+      return;
+    }
+
+    this._dataHandler(state, this.local ?? { list: [] }, this.localDBService);
+  }
+
+  private saveSessionData(state: object): void {
+    let session = this.session;
+
+    if (!session) {
+      return;
+    }
+
+    this._dataHandler(state, session, this.sessionDBService);
+  }
+
+  private _dataHandler(
+    state: object,
+    options: VuexAlongWatchOptions,
+    db: DBService | undefined
+  ): void {
+    if (!db) {
+      return;
+    }
+
+    let duplicateState = cloneDeep(state);
+    let key = ROOT_KEY;
+
+    let { list, isFilter } = options;
+
+    if (list?.length) {
+      duplicateState = isFilter
+        ? omit(duplicateState, list)
+        : pick(duplicateState, list);
+    }
+
+    db.set(key, duplicateState).catch(logger);
   }
 
   saveData(state: object): void {
-    if (!this.justSession) {
-      let local = this.local;
-      let localState = _.cloneDeep(state);
-
-      if (local) {
-        let { list, isFilter } = local;
-
-        if (list.length) {
-          localState = isFilter
-            ? _.omit(localState, list)
-            : _.pick(localState, list);
-        }
-      }
-
-      this.localDBService.set(ROOT_DATA_KEY, localState);
-    }
-
-    let session = this.session;
-
-    if (session) {
-      let { list, isFilter } = session;
-      let sessionState = _.cloneDeep(state);
-
-      if (list.length) {
-        sessionState = isFilter
-          ? _.omit(sessionState, list)
-          : _.pick(sessionState, list);
-      }
-
-      this.sessionDBService.set(ROOT_DATA_KEY, sessionState);
-    }
+    this.saveLocalData(state);
+    this.saveSessionData(state);
   }
 
   restoreData(store: Store): void {
+    let key = ROOT_KEY;
+
     store.replaceState(
-      _.defaultsDeep(
-        this.sessionDBService.get(ROOT_DATA_KEY),
-        this.localDBService.get(ROOT_DATA_KEY),
+      defaultsDeep(
+        this.sessionDBService?.get(key),
+        this.localDBService?.get(key),
         store.state
       )
     );
   }
 
   clear(local = true, session = false): void {
-    if (local) {
-      this.localDBService.unset(ROOT_DATA_KEY);
-    }
-
-    if (session) {
-      this.sessionDBService.unset(ROOT_DATA_KEY);
-    }
+    local && this.localDBService?.unset(ROOT_KEY).catch(logger);
+    session && this.sessionDBService?.unset(ROOT_KEY).catch(logger);
   }
 }
 
-export default (options: VuexAlongOptions = {}): ((store: Store) => void) => {
-  let vuexAlong = new VuexAlong(options);
+export default function<TSchema = any>(
+  options: VuexAlongOptions<TSchema> = {}
+): (store: Store) => void {
+  let vuexAlong = new VuexAlong<TSchema>(options);
 
   return (store: Store): void => {
-    vuexAlong.restoreData(store);
-
-    store.subscribe((_mutation, state) => vuexAlong.saveData(state));
+    vuexAlong.ready.then(() => {
+      vuexAlong.restoreData(store);
+      store.subscribe((_mutation, state) => vuexAlong.saveData(state));
+    });
   };
-};
+}
+
+// utils
+
+function logger(reason: any): void {
+  console.error(reason);
+}

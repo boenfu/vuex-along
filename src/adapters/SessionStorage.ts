@@ -1,34 +1,33 @@
-/* global sessionStorage */
-const stringify = (obj: object) => {
-  return JSON.stringify(obj, null, 2);
-};
+import { AdapterSync, AdapterOptions } from "lowdb";
 
-export default class SessionStorage {
-  source: any;
-  defaultValue: any;
-  serialize: any;
-  deserialize: any;
+const stringify = (obj: unknown) => JSON.stringify(obj, null, 2);
 
-  constructor(source: any, options?: any) {
-    options = options ? options : {};
+class SessionStorage<TSchema = any> {
+  defaultValue: TSchema;
+  serialize: (data: TSchema) => string;
+  deserialize: (serializedData: string) => TSchema;
 
+  constructor(public source: string, options?: AdapterOptions) {
     this.source = source;
-    this.defaultValue = options.defaultValue || {};
-    this.serialize = options.serialize || stringify;
-    this.deserialize = options.deserialize || JSON.parse;
+    this.defaultValue = options?.defaultValue ?? {};
+    this.serialize = options?.serialize ?? stringify;
+    this.deserialize = options?.deserialize ?? JSON.parse;
   }
 
-  read() {
+  read(): TSchema {
     const data = sessionStorage.getItem(this.source);
-    if (data) {
-      return this.deserialize(data);
-    } else {
+
+    if (!data) {
       sessionStorage.setItem(this.source, this.serialize(this.defaultValue));
       return this.defaultValue;
     }
+
+    return this.deserialize(data);
   }
 
-  write(data: object): void {
+  write(data: TSchema): void {
     sessionStorage.setItem(this.source, this.serialize(data));
   }
 }
+
+export default (SessionStorage as unknown) as AdapterSync;

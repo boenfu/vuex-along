@@ -10,13 +10,13 @@ Vue.use(Vuex);
 const moduleA = {
   state: {
     a1: "hello",
-    a2: "world"
-  }
+    a2: "world",
+  },
 };
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
   },
   mutations: {
     increment(state) {
@@ -33,21 +33,21 @@ const store = new Vuex.Store({
         .split("")
         .reverse()
         .join("");
-    }
+    },
   },
   modules: {
-    ma: moduleA
+    ma: moduleA,
   },
   plugins: [
     createVuexAlong({
       name: "hello-vuex-along",
       local: { list: ["ma"], isFilter: true },
-      session: { list: ["ma.a1"] }
-    })
-  ]
+      session: { list: ["ma.a1"] },
+    }),
+  ],
 });
 
 new Vue({
   render: h => h(App),
-  store
+  store,
 }).$mount("#app");

@@ -1,6 +1,6 @@
 [English](./README.EN.md) | 简体中文
 
-<p align="center"><img width="100" src="https://vuejs.org/images/logo.png"></p>
+<p align="center"><img width="140" src="./logo.png"></p>
 <p align="center">
   <a href="#"><img alt="Travis (.org) branch" src="https://img.shields.io/travis/boenfu/vuex-along/master?style=flat-square"></a>
   <a href="#"><img alt="npm" src="https://img.shields.io/npm/v/vuex-along?style=flat-square"></a>
@@ -10,7 +10,7 @@
   <a href="http://makeapullrequest.com"><img alt="PRS" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
-<h2 align="center">vuex-along - 持久化存储 state 的 vuex 插件</h2>
+<h2 align="center">vuex-along - 持久化存储 state 的 vuex 扩展</h2>
 <p align="center"><b>常用于刷新网页后自动恢复 state</b></p>
 # 目录
 
@@ -20,7 +20,7 @@
 - [参数](#参数)
 - [数据清理](#数据清理)
 - [运行demo](#运行demo)
-- [事项](#事项)
+- [提示项](#提示项)
 - [贡献者们](#贡献者们)
 - [维护者](#维护者)
 - [License](#license)
@@ -125,12 +125,12 @@ cd ./vuex-along
 yarn run:demo
 ```
 
-## 事项
+## 提示项
 
 - 支持 `typescript`
-- `sessionStorage` 数据恢复时优先级高于 `localStorage`
+- `IE11`可用
+- `sessionStorage` 数据恢复优先级高于 `localStorage`
 - 存储内容的顶层对象的 `key` 固定为 `root`
-- 未对 IE 11 以下的使用场景进行测试
 
 ## 贡献者们
 
