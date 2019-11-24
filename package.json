@@ -30,10 +30,10 @@
   },
   "scripts": {
     "build": "yarn build:plugins && yarn build:demo",
-    "gh-pages": "yarn build && ./scripts/publish-pages.sh",
     "build:plugins": "tsc",
     "build:demo": "cd ./demo && yarn && yarn build",
     "run:demo": "cd ./demo && yarn && yarn serve",
+    "publish-pages": "yarn build && ./scripts/publish-pages.sh",
     "test": "jest --clearCache && jest --silent --passWithNoTests"
   },
   "dependencies": {
