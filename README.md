@@ -7,6 +7,7 @@
     <a href="#"><img alt="npm" src="https://img.shields.io/npm/dt/vuex-along?style=flat-square"></a>
   <a href="#"><img alt="NPM" src="https://img.shields.io/npm/l/vuex-along?style=flat-square"></a>
   <a href="#"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/boenfu/vuex-along?style=flat-square"></a>
+  <a href="http://makeapullrequest.com"><img alt="PRS" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
 <h2 align="center">vuex-along - 持久化存储 state 的 vuex 插件</h2>
