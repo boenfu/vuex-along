@@ -12,6 +12,7 @@
 
 <h2 align="center">vuex-along - 持久化存储 state 的 vuex 扩展</h2>
 <p align="center"><b>常用于刷新网页后自动恢复 state</b></p>
+
 # 目录
 
 - [安装](#安装)
@@ -19,7 +20,7 @@
 - [示例](#示例)
 - [参数](#参数)
 - [数据清理](#数据清理)
-- [运行demo](#运行demo)
+- [运行 demo](#运行demo)
 - [提示项](#提示项)
 - [贡献者们](#贡献者们)
 - [维护者](#维护者)
@@ -45,8 +46,6 @@ export default new Vuex.Store({
 });
 ```
 
-
-
 > 到此为止，插件已经生效了，默认会存储所有 state 到 localStorage
 >
 > 传入需要的 [参数](#参数) 来满足使用需求
@@ -61,16 +60,16 @@ import createVuexAlong from "vuex-along";
 const moduleA = {
   state: {
     a1: "hello",
-    a2: "world"
-  }
+    a2: "world",
+  },
 };
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
   },
   modules: {
-    ma: moduleA
+    ma: moduleA,
   },
   plugins: [
     createVuexAlong({
@@ -79,14 +78,14 @@ const store = new Vuex.Store({
       local: {
         list: ["ma"],
         // 过滤模块 ma 数据， 将其他的存入 localStorage
-        isFilter: true
+        isFilter: true,
       },
       session: {
         // 保存模块 ma 中的 a1 到 sessionStorage
-        list: ["ma.a1"]
-      }
-    })
-  ]
+        list: ["ma.a1"],
+      },
+    }),
+  ],
 });
 ```
 
@@ -117,7 +116,7 @@ clearVuexAlong(true,false) // 只清理 localStorage
 clearVuexAlong(false,true) // 只清理 sessionStorage
 ```
 
-## 运行demo
+## 运行 demo
 
 ```shell
 git clone https://github.com/boenfu/vuex-along.git

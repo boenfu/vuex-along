@@ -12,6 +12,7 @@ English | [简体中文](./README.md)
 
 <h2 align="center">vuex-along - A plugins for vuex</h2>
 <p align="center"><b>Automatically restore vuex state after refreshing the page</b></p>
+
 # Directory
 
 - [Install](#Install)
