@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import createVuexAlong from "../../lib/main";
 
 import App from "./App.vue";
+import router from "./router";
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
@@ -47,7 +48,17 @@ const store = new Vuex.Store({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  // eslint-disable-next-line
+  console.info("router.beforeEach", {
+    "router.app.$options.store.state.count":
+      router.app.$options.store.state.count,
+  });
+  next();
+});
+
 new Vue({
   render: h => h(App),
+  router,
   store,
 }).$mount("#app");
