@@ -13,18 +13,19 @@ export class DBService<SchemaT = any> {
 
   constructor(
     private _name: string,
-    private _adapter: LowdbAdapter<SchemaT> = LocalStorage
+    Adapter: LowdbAdapter<SchemaT> = LocalStorage
   ) {
-    this.ready = this.initialize();
+    this.ready = this.initialize(Adapter);
   }
 
-  private async initialize(): Promise<void> {
+  private async initialize(Adapter: LowdbAdapter<SchemaT>): Promise<void> {
     let name = this._name;
-    let Adapter = this._adapter;
 
-    let adapter = (await new Adapter(name)) as LowdbAdapter<SchemaT>;
+    let adapter = new Adapter(name) as LowdbAdapter<SchemaT>;
 
-    this.db = await low(adapter);
+    this.db = (!("then" in adapter)
+      ? low(adapter)
+      : await low(adapter)) as Lowdb<SchemaT>;
   }
 
   get<T>(key: string): T | undefined {

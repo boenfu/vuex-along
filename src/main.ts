@@ -20,6 +20,7 @@ export interface VuexAlongWatchOptions {
 export type VuexAlongAdapterOptions<TSchema> = {
   local?: LowdbAdapter<TSchema>;
   session?: LowdbAdapter<TSchema>;
+  sync?: boolean;
 };
 
 export interface VuexAlongOptions<TSchema> {
@@ -37,8 +38,13 @@ class VuexAlong<TSchema = any> {
   private local: VuexAlongWatchOptions | undefined;
   private session: VuexAlongWatchOptions | undefined;
   private justSession: boolean;
+  private sync: boolean;
 
-  get ready(): Promise<[void, void]> {
+  get ready(): Promise<[void, void]> | true {
+    if (this.sync) {
+      return true;
+    }
+
     return Promise.all([
       this.localDBService?.ready,
       this.sessionDBService?.ready,
@@ -50,13 +56,17 @@ class VuexAlong<TSchema = any> {
     session,
     name = DEFAULT_NAME,
     justSession = false,
-    adapterOptions: { local: localAdapter, session: sessionAdapter } = {
+    // Not open interface
+    adapterOptions: { local: localAdapter, session: sessionAdapter, sync } = {
       session: SessionStorage,
+      // Make sure your adapter is syncing. Then you can get the synchronized state
+      sync: true,
     },
   }: VuexAlongOptions<TSchema>) {
     this.local = local;
     this.session = session;
     this.justSession = justSession;
+    this.sync = !!((!localAdapter && !sessionAdapter) || sync);
 
     if (!justSession) {
       this.localDBService = new DBService(name, localAdapter);
@@ -142,11 +152,12 @@ export default function<TSchema = any>(
 ): (store: Store) => void {
   let vuexAlong = new VuexAlong<TSchema>(options);
 
-  return (store: Store): void => {
-    vuexAlong.ready.then(() => {
-      vuexAlong.restoreData(store);
-      store.subscribe((_mutation, state) => vuexAlong.saveData(state));
-    });
+  return async (store: Store): Promise<void> => {
+    if (vuexAlong.ready !== true) {
+      await vuexAlong.ready;
+    }
+    vuexAlong.restoreData(store);
+    store.subscribe((_mutation, state) => vuexAlong.saveData(state));
   };
 }
 
