@@ -130,6 +130,7 @@ yarn run:demo
 - `IE11`可用
 - `sessionStorage` 数据恢复优先级高于 `localStorage`
 - 存储内容的顶层对象的 `key` 固定为 `root`
+- [微信小程序适配](https://github.com/boenfu/vuex-along-wx-adapter)
 
 ## 贡献者们
 
