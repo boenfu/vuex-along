@@ -1,6 +1,6 @@
 {
   "name": "vuex-along",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "Automatically restore vuex state after refreshing the page",
   "author": "boenfu",
   "main": "lib/main.js",
