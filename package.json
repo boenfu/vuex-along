@@ -20,8 +20,6 @@
     "@babel/plugin-transform-modules-commonjs": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@types/jest": "^24.0.11",
-    "@types/lodash-es": "^4.17.3",
-    "@types/lowdb": "^1.0.9",
     "babel-jest": "^24.9.0",
     "jest": "^24.7.1",
     "rimraf": "^2.6.3",
@@ -38,6 +36,8 @@
     "test": "jest --clearCache && jest --silent --passWithNoTests"
   },
   "dependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "@types/lowdb": "^1.0.9",
     "lodash-es": "^4.17.15",
     "lowdb": "^1.0.0"
   },
