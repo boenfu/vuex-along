@@ -1,4 +1,7 @@
-import { defaultsDeep, omit, pick, cloneDeep } from "lodash-es";
+import defaultsDeep from "lodash-es/defaultsDeep";
+import omit from "lodash-es/omit";
+import pick from "lodash-es/pick";
+import cloneDeep from "lodash-es/cloneDeep";
 
 import { DBService, LowdbAdapter } from "./db";
 import SessionStorage from "./adapters/SessionStorage";
