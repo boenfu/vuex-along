@@ -10,7 +10,8 @@
   "license": "MIT",
   "keywords": [
     "vue",
-    "vuex"
+    "vuex",
+    "localStorage"
   ],
   "files": [
     "lib"

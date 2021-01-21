@@ -49,6 +49,8 @@ export default new Vuex.Store({
 > Now, the plugin has been in effect, and all state is stored to localStorage by default.
 >
 > Set [Options](#Options) to meet the usage requirements
+>
+>- [secure-adapter](https://github.com/boenfu/vuex-along-secure-adapter)
 
 ## Example
 

@@ -22,7 +22,7 @@
 - [数据清理](#数据清理)
 - [运行 demo](#运行demo)
 - [提示项](#提示项)
-- [贡献者们](#贡献者们)
+- [贡献者](#贡献者)
 - [维护者](#维护者)
 - [License](#license)
 
@@ -49,6 +49,8 @@ export default new Vuex.Store({
 > 到此为止，插件已经生效了，默认会存储所有 state 到 localStorage
 >
 > 传入需要的 [参数](#参数) 来满足使用需求
+>- [微信小程序适配器](https://github.com/boenfu/vuex-along-wx-adapter)
+>- [数据加密适配器](https://github.com/boenfu/vuex-along-secure-adapter)
 
 ## 示例
 
@@ -130,7 +132,6 @@ yarn run:demo
 - `IE11`可用
 - `sessionStorage` 数据恢复优先级高于 `localStorage`
 - 存储内容的顶层对象的 `key` 固定为 `root`
-- [微信小程序适配](https://github.com/boenfu/vuex-along-wx-adapter)
 
 ## 贡献者们
 

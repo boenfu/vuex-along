@@ -1,5 +1,4 @@
 import low, { AdapterSync, LowdbSync, AdapterAsync, LowdbAsync } from "lowdb";
-import LocalStorage from "lowdb/adapters/LocalStorage";
 
 type Lowdb<SchemaT> = LowdbSync<SchemaT> | LowdbAsync<SchemaT>;
 
@@ -11,10 +10,7 @@ export class DBService<SchemaT = any> {
   db!: Lowdb<SchemaT>;
   ready: Promise<void>;
 
-  constructor(
-    private _name: string,
-    Adapter: LowdbAdapter<SchemaT> = LocalStorage
-  ) {
+  constructor(private _name: string, Adapter: LowdbAdapter<SchemaT>) {
     this.ready = this.initialize(Adapter);
   }
 

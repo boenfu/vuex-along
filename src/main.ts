@@ -4,6 +4,7 @@ import pick from "lodash-es/pick";
 import cloneDeep from "lodash-es/cloneDeep";
 
 import { DBService, LowdbAdapter } from "./db";
+import LocalStorage from "lowdb/adapters/LocalStorage";
 import SessionStorage from "./adapters/SessionStorage";
 
 const DEFAULT_NAME = "vuex-along";
@@ -59,13 +60,15 @@ class VuexAlong<TSchema = any> {
     session,
     name = DEFAULT_NAME,
     justSession = false,
-    // Not open interface
-    adapterOptions: { local: localAdapter, session: sessionAdapter, sync } = {
-      session: SessionStorage,
-      // Make sure your adapter is syncing. Then you can get the synchronized state
-      sync: true,
-    },
+    adapterOptions,
   }: VuexAlongOptions<TSchema>) {
+    let {
+      local: localAdapter = LocalStorage,
+      session: sessionAdapter = SessionStorage,
+      // Make sure your adapter is syncing. Then you can get the synchronized state
+      sync = true,
+    } = adapterOptions || {};
+
     this.local = local;
     this.session = session;
     this.justSession = justSession;
@@ -150,7 +153,7 @@ class VuexAlong<TSchema = any> {
   }
 }
 
-export default function<TSchema = any>(
+export default function <TSchema = any>(
   options: VuexAlongOptions<TSchema> = {}
 ): (store: Store) => void {
   let vuexAlong = new VuexAlong<TSchema>(options);
