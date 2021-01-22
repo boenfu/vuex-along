@@ -1,8 +1,10 @@
+import LocalStorage from "lowdb/adapters/LocalStorage";
+
 import { DBService } from "../src/db";
 import SessionStorage from "../src/adapters/SessionStorage";
 
 test("test local db", async () => {
-  const local = new DBService("local");
+  const local = new DBService("local", LocalStorage);
 
   await local.ready;
 
