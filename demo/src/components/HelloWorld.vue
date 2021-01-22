@@ -3,29 +3,30 @@
     <h1>{{ msg }}</h1>
     <p>
       Auto save vuex state to localStorage or sessionStorage,
-      <br>check out the
+      <br />check out the
       <a
         href="https://github.com/boenfu/vuex-along"
         target="_blank"
         rel="noopener"
-      >github</a>.
+        >github</a
+      >.
     </p>
     <h3>Local example</h3>
     <ul>
       <li>
-        {{$store.state.count}}
+        {{ $store.state.count }}
         <button @click="increment">+ 10</button>
       </li>
     </ul>
     <h3>Session example</h3>
     <ul>
       <li>
-        {{$store.state.ma.a1}}
+        {{ $store.state.ma.a1 }}
         <button @click="reverseA1">reverse a1</button>
         (Saved ma.a1)
       </li>
       <li>
-        {{$store.state.ma.a2}}
+        {{ $store.state.ma.a2 }}
         <button @click="reverseA2">reverse a2</button>
         (Unsaved ma.a2)
       </li>
@@ -36,7 +37,9 @@
         <button @click="clearLocal">clear local / 清除 localStorage</button>
       </li>
       <li>
-        <button @click="clearSession">clear Session / 清除 sessionStorage</button>
+        <button @click="clearSession">
+          clear Session / 清除 sessionStorage
+        </button>
       </li>
     </ul>
     <h3>
@@ -45,9 +48,10 @@
         href="https://github.com/boenfu/vuex-along/tree/master/demo/src/main.js"
         target="_blank"
         rel="noopener"
-      >demo/src/main.js</a>
+        >demo/src/main.js</a
+      >
     </h3>
-    <br>
+    <br />
     <pre>
 const moduleA = {
   state: {
@@ -95,12 +99,13 @@ const store = new Vuex.Store({
     </pre>
     <p>
       More options
-      <br>check out the
+      <br />check out the
       <a
         href="https://github.com/boenfu/vuex-along"
         target="_blank"
         rel="noopener"
-      >README</a>.
+        >README</a
+      >.
     </p>
   </div>
 </template>
@@ -109,7 +114,7 @@ const store = new Vuex.Store({
 export default {
   name: "HelloWorld",
   props: {
-    msg: String
+    msg: String,
   },
   methods: {
     increment() {
@@ -126,8 +131,8 @@ export default {
     },
     clearSession() {
       window.clearVuexAlong(false, true);
-    }
-  }
+    },
+  },
 };
 </script>
 

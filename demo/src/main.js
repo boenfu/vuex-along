@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createVuexAlong from "../../lib/main";
+import SecureAdapter from "vuex-along-secure-adapter";
 
 import App from "./App.vue";
 import router from "./router";
@@ -44,6 +45,7 @@ const store = new Vuex.Store({
       name: "hello-vuex-along",
       local: { list: ["ma"], isFilter: true },
       session: { list: ["ma.a1"] },
+      adapterOptions: SecureAdapter(),
     }),
   ],
 });
